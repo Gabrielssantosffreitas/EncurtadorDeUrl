@@ -1,5 +1,6 @@
 package com.gabriel.CortaLink.controller;
 
+import com.gabriel.CortaLink.records.DTO.LinkCriadoDTO;
 import com.gabriel.CortaLink.records.DTO.LinksInfoDTO;
 import com.gabriel.CortaLink.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,16 @@ public class LinkController {
     @Autowired
     LinkService linkService;
 
-    @GetMapping("/links/{id}")
+    @GetMapping("/link/{id}")
     public ResponseEntity<List<LinksInfoDTO>> getLinksByIdUser(@PathVariable long id){
         return linkService.returnLinksInfoById(id);
     }
     @GetMapping("/r/{link}")
     public ResponseEntity<Void> redirect (@PathVariable String link){
         return linkService.redirect(link);
+    }
+    @PostMapping("/link")
+    public ResponseEntity<LinkCriadoDTO> postLink (@RequestBody LinkCriadoDTO linkCriadoDTO){
+        return linkService.postLink(linkCriadoDTO);
     }
 }
