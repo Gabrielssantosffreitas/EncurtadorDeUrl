@@ -3,6 +3,8 @@ package com.gabriel.CortaLink.service;
 import com.gabriel.CortaLink.entity.LinkEntity;
 import com.gabriel.CortaLink.entity.UsuarioEntity;
 import com.gabriel.CortaLink.records.DTO.LinkCriadoDTO;
+import com.gabriel.CortaLink.records.DTO.LinkDeleteRequestDTO;
+import com.gabriel.CortaLink.records.DTO.LinksAllDTO;
 import com.gabriel.CortaLink.records.DTO.LinksInfoDTO;
 import com.gabriel.CortaLink.regex.LinkOriginalRegex;
 import com.gabriel.CortaLink.repository.LinkRepository;
@@ -67,7 +69,38 @@ public class LinkService {
 
             return ResponseEntity.ok().body(linkCriadoDTO);
 
-
     }
+
+    public ResponseEntity<List<LinksAllDTO>> getAll (){
+        List<LinkEntity> linkEntityList =  linkRepository.findAll();
+        List<LinksAllDTO> linksAllDTOList =  new LinkedList<>();
+        for( LinkEntity linkEntity : linkEntityList ){
+             linksAllDTOList.addLast(new LinksAllDTO(
+                     linkEntity.getId(),
+                     linkEntity.getLinkOriginal(),
+                     linkEntity.getLinkCortado(),
+                     linkEntity.getClick(),
+                     linkEntity.getCriacao(),
+                     linkEntity.getUsuario().getId(),
+                     linkEntity.getUsuario().getUsername(),
+                     linkEntity.getUsuario().getCriacao(),
+                     linkEntity.getUsuario().getDados()
+             ));
+        }
+        return  ResponseEntity.ok().body(linksAllDTOList);
+    }
+
+
+    public  ResponseEntity<Void> deleteLink (LinkDeleteRequestDTO linkDeleteRequestDTO){
+           List<LinkEntity> linkEntityList =  linkRepository.findByUsuarioId(linkDeleteRequestDTO.idUsuario());
+           for(LinkEntity linkEntity : linkEntityList){
+               if(linkEntity.getId().equals(linkDeleteRequestDTO.idLink()))return ResponseEntity.ok().build();
+
+           }
+
+           return ResponseEntity.badRequest().build();
+    }
+
+
 
 }
