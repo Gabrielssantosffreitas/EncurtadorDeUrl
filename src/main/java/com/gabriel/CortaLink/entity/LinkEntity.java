@@ -23,8 +23,9 @@ public class LinkEntity {
     @Column(nullable = false,name = "criacao")
     private LocalDateTime criacao;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_usuario ",unique = true,referencedColumnName = "id")
+   // @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "id_usuario ",referencedColumnName = "id")
     private UsuarioEntity usuario;
 
     public LinkEntity() {
