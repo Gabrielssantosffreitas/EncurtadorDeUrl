@@ -23,3 +23,4 @@ public class LinkController {
         return linkService.redirect(link);
     }
 }
+git
