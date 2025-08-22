@@ -1,5 +1,7 @@
 package com.gabriel.CortaLink.controller;
 
+import com.gabriel.CortaLink.entity.UsuarioEntity;
+import com.gabriel.CortaLink.records.DTO.UsuarioCreatedDTO;
 import com.gabriel.CortaLink.records.DTO.UsuarioInfoDTO;
 import com.gabriel.CortaLink.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class UsuarioController {
     public  ResponseEntity<Void> deleteUsuario (@PathVariable Long id){
         return usuarioService.deleteUsuario(id);
     }
-
-
+    @PostMapping("/")
+    public  ResponseEntity<UsuarioCreatedDTO> postUsuario (@RequestBody UsuarioCreatedDTO  usuarioCreatedDTO){
+        return usuarioService.postUsuario(usuarioCreatedDTO);
+    }
 }
