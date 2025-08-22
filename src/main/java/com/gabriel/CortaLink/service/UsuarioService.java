@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,16 +37,23 @@ public class UsuarioService {
 
     public ResponseEntity<UsuarioCreatedDTO> postUsuario (UsuarioCreatedDTO usuarioCreatedDTO){
         LoginEntity loginEntity = new LoginEntity();
-        UsuarioEntity usuarioEntity =  new UsuarioEntity();
         DadosEntity dadosEntity =  new DadosEntity();
+        UsuarioEntity usuarioEntity =  new UsuarioEntity();
+
+        dadosEntity.setEmail(usuarioCreatedDTO.email());
+        dadosEntity.setTelefone(usuarioCreatedDTO.telefone());
+
+        loginEntity.setSenha(usuarioCreatedDTO.senha());
+
         usuarioEntity.setUsername(usuarioCreatedDTO.username());
         usuarioEntity.setUsuarioRole(usuarioCreatedDTO.role());
-        dadosEntity.setEmail(usuarioCreatedDTO.Email());
-        dadosEntity.setTelefone(usuarioCreatedDTO.telenofe());
-        loginEntity.setSenha(usuarioCreatedDTO.senha());
+        usuarioEntity.setCriacao(LocalDateTime.now());
+        usuarioEntity.setDados(dadosEntity);
+        usuarioEntity.setLogin(loginEntity);
+        usuarioRepository.save(usuarioEntity);
         if(usuarioCreatedDTO.isEmailMenssage().equals(IsEmailMenssage.NAO))return ResponseEntity.ok().body(usuarioCreatedDTO);
         // cria o emailSendService
-        return ResponseEntity.ok().body(UsuarioCreatedDTO);
+        return ResponseEntity.ok().body(usuarioCreatedDTO);
 
 
 

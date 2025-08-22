@@ -21,7 +21,7 @@ public class UsuarioController {
     public  ResponseEntity<Void> deleteUsuario (@PathVariable Long id){
         return usuarioService.deleteUsuario(id);
     }
-    @PostMapping("/")
+    @PostMapping("/post")
     public  ResponseEntity<UsuarioCreatedDTO> postUsuario (@RequestBody UsuarioCreatedDTO  usuarioCreatedDTO){
         return usuarioService.postUsuario(usuarioCreatedDTO);
     }
