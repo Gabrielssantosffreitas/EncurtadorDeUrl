@@ -15,5 +15,10 @@ public class UsuarioController {
     public ResponseEntity<UsuarioInfoDTO> getUsuario(@PathVariable Long id ){
         return  usuarioService.getUsuario(id);
     }
+    @DeleteMapping("/{id}")
+    public  ResponseEntity<Void> deleteUsuario (@PathVariable Long id){
+        return usuarioService.deleteUsuario(id);
+    }
+
 
 }

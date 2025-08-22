@@ -22,4 +22,11 @@ public class UsuarioService {
        UsuarioInfoDTO usuarioInfoDTO =  new UsuarioInfoDTO(optionalUsuarioEntity.get().getId(), optionalUsuarioEntity.get().getUsername());
         return ResponseEntity.ok().body(usuarioInfoDTO);
     }
+
+    public ResponseEntity<Void> deleteUsuario ( Long id){
+        Optional<UsuarioEntity> optionalUsuarioEntity =  usuarioRepository.findById(id);
+        if (optionalUsuarioEntity.isEmpty()) return ResponseEntity.badRequest().build();
+        usuarioRepository.delete(optionalUsuarioEntity.get());
+        return ResponseEntity.ok().build();
+    }
 }
